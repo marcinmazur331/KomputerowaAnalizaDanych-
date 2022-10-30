@@ -5,7 +5,8 @@ sepalLenghtTemp = []
 sepalWidthTemp = []
 petalLengthTemp = []
 petalWidthTemp = []
-speciesTemp = []
+species = []
+
 with open('test.csv', 'r') as file:
     size = 0
     for line in file:
@@ -15,12 +16,7 @@ with open('test.csv', 'r') as file:
         sepalWidthTemp.append(float(container[1]))
         petalLengthTemp.append(float(container[2]))
         petalWidthTemp.append(float(container[3]))
-        if container[4] == "0\n":
-            speciesTemp.append("setosa")
-        if container[4] == "1\n":
-            speciesTemp.append("versicolor")
-        if container[4] == "2\n":
-            speciesTemp.append("virginica")
+        species.append(int(container[4]))
 
 
 def bubbleSort(arr):
@@ -32,20 +28,16 @@ def bubbleSort(arr):
                 arr[0][j + 1] = temp
 
 
-bubbleSort(sepalLenghtTemp)
-bubbleSort()
-
 sepalLenght = np.array([sepalLenghtTemp])
 sepalWidth = np.array([sepalWidthTemp])
 petalLength = np.array([petalLengthTemp])
 petalWidth = np.array([petalWidthTemp])
-species = np.array([speciesTemp])
 
 
-def liczebnosc(nazwa):
+def liczebnosc(number):
     counter = 0
-    for i in species:
-        if species[i] == nazwa:
+    for i in range(size):
+        if species[i] == number:
             counter += 1
     return counter
 
@@ -57,7 +49,7 @@ def udzial_procentowy(nazwa):
 def maksimum(cecha):
     max = -1
     for i in range(size):
-        if cecha[i] > max:
+        if cecha[0][i] > max:
             max = cecha[0][i]
     return max
 
@@ -78,32 +70,41 @@ def srednia_arytmetyczna(cecha):
 
 
 def mediana(cecha):
-    bubbleSort(cecha[0].astype(list))
+    # sortowanie
+    index = math.floor(size / 2) - 1
     if size % 2 == 0:
-        return round(
-            (cecha[0][int(size / 2)] + cecha[0][(int(size / 2)) + 1]) / 2, 2)
+        return round((cecha[0][index] + cecha[0][index + 1]) / 2, 2)
     return cecha[0][int(size / 2) + 1]
 
 
+# def kwartyl(cecha):
+#     array1 = np.array(int(size / 2))
+#     array2 = np.array(int(size / 2))
+#     if size % 2 == 0:
+#         for i in range(int(size / 2)):
+#             np.append(array1, cecha[0][i])
+#         for i in range(int(size / 2) + 1, size):
+#             np.append(array1, cecha[0][i])
+#         dolny = mediana(array1[0])
+#         gorny = mediana(array2[0])
+#         return (dolny, gorny)
+#     for i in reversed(range(int(size / 2))):
+#         array1[i] = cecha[0][i]
+#     for i in range(math.floor(size / 2) + 1, size):
+#         array2[i] = cecha[0][i]
+#     dolny = mediana(array1)
+#     gorny = mediana(array2)
+#     return (dolny, gorny)
+
+
 def kwartyl(cecha):
-    bubbleSort(cecha[0][0])
-    array1 = np.empty(int(size / 2))
-    array2 = np.empty(int(size / 2))
-    if size % 2 == 0:
-        for i in range(int(size / 2)):
-            array1.fill(cecha[0][i])
-        for i in range(int(size / 2) + 1, size):
-            array2.fill(cecha[0][i])
-        dolny = mediana(array1)
-        gorny = mediana(array2)
-        return (dolny, gorny)
-    for i in reversed(range(int(size / 2))):
-        array1[i] = cecha[0][i]
-    for i in range(math.floor(size / 2) + 1, size):
-        array2[i] = cecha[0][i]
-    dolny = mediana(array1)
-    gorny = mediana(array2)
-    return (dolny, gorny)
+    # sortowanie
+    firstQuadIndex = math.floor(size / 4) - 1
+    thirdQuadIndex = math.ceil(size * 3 / 4) - 1
+    if (math.floor(size / 2) % 2 == 0):
+        return ((cecha[0][firstQuadIndex] + cecha[0][firstQuadIndex + 1]) / 2,
+                (cecha[0][thirdQuadIndex] + cecha[0][thirdQuadIndex + 1]) / 2)
+    return (cecha[0][firstQuadIndex + 1], cecha[0][thirdQuadIndex])
 
 
 def odchylenie_standardowe(cecha):
@@ -115,6 +116,10 @@ def odchylenie_standardowe(cecha):
 
 
 # print(srednia_arytmetyczna(sepalLenght))
-print(kwartyl(sepalWidth)[0])
+print(kwartyl(sepalWidth))
 # print(odchylenie_standardowe(petalLength))
-# print(mediana(petalWidthTemp))
+# print(liczebnosc(2))
+# print(udzial_procentowy(0))
+# print(minimum(sepalLenght))
+# print(maksimum(sepalLenght))
+# print(mediana(petalWidth))

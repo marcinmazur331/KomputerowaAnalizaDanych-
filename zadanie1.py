@@ -1,3 +1,5 @@
+from itertools import count
+from typing import Counter
 import numpy as np
 
 sepalLenght = []
@@ -13,25 +15,34 @@ with open('data.csv', 'r') as file:
         sepalWidth.append(float(container[1]))
         petalLength.append(float(container[2]))
         petalWidth.append(float(container[3]))
-        if (container[4] == "0\n"):
-            species.append("setosa")
-        if (container[4] == "1\n"):
-            species.append("versicolor")
-        if (container[4] == "2\n"):
-            species.append("virginica")
+        species.append(int(container[4]))
+        # if (container[4] == "0\n"):
+        #     species.append("setosa")
+        # if (container[4] == "1\n"):
+        #     species.append("versicolor")
+        # if (container[4] == "2\n"):
+        #     species.append("virginica")
+
+# def getLiczebnosc():
+#     setosa = species.count("setosa")
+#     versicolor = species.count("versicolor")
+#     virginica = species.count("virginica")
+#     return (setosa, versicolor, virginica)
+
+# def procenty():
+#     return (round(getLiczebnosc()[0] / 150,
+#                   2), round(getLiczebnosc()[1] / 150,
+#                             2), round(getLiczebnosc()[2] / 150, 2))
+
+# print(procenty()[0], procenty()[1], procenty()[2])
 
 
-def getLiczebnosc():
-    setosa = species.count("setosa")
-    versicolor = species.count("versicolor")
-    virginica = species.count("virginica")
-    return (setosa, versicolor, virginica)
+def gonwo(nuber):
+    counter = 0
+    for i in species:
+        if species[i] ==:
+            counter += 1
+    return counter
 
 
-def procenty():
-    return (round(getLiczebnosc()[0] / 150,
-                  2), round(getLiczebnosc()[1] / 150,
-                            2), round(getLiczebnosc()[2] / 150, 2))
-
-
-print(procenty()[0], procenty()[1], procenty()[2])
+gonwo()
