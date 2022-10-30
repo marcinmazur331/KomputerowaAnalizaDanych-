@@ -1,0 +1,2 @@
+print(arr)
+    # print(array)

@@ -5,6 +5,7 @@ sepalWidth = []
 petalLength = []
 petalWidth = []
 species = []
+
 with open('data.csv', 'r') as file:
     for line in file:
         container = line.split(',')
@@ -19,20 +20,18 @@ with open('data.csv', 'r') as file:
         if (container[4] == "2\n"):
             species.append("virginica")
 
-print(
-    "No. \t",
-    "species\t",
-    "sepalLenght\t",
-    "sepalWidth\t",
-    "petalLength\t",
-    "petalWidth\t",
-)
-for i in range(150):
-    print(
-        i + 1,
-        species[i],
-        sepalLenght[i],
-        sepalWidth[i],
-        petalLength[i],
-        petalWidth[i],
-    )
+
+def getLiczebnosc():
+    setosa = species.count("setosa")
+    versicolor = species.count("versicolor")
+    virginica = species.count("virginica")
+    return (setosa, versicolor, virginica)
+
+
+def procenty():
+    return (round(getLiczebnosc()[0] / 150,
+                  2), round(getLiczebnosc()[1] / 150,
+                            2), round(getLiczebnosc()[2] / 150, 2))
+
+
+print(procenty()[0], procenty()[1], procenty()[2])

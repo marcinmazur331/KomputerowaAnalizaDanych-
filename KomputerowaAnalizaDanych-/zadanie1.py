@@ -1,25 +1,45 @@
+import numpy as np
 import math
 
-sepalLenght = []
-sepalWidth = []
-petalLength = []
-petalWidth = []
-species = []
+sepalLenghtTemp = []
+sepalWidthTemp = []
+petalLengthTemp = []
+petalWidthTemp = []
+speciesTemp = []
 with open('test.csv', 'r') as file:
     size = 0
     for line in file:
         size += 1
         container = line.split(',')
-        sepalLenght.append(float(container[0]))
-        sepalWidth.append(float(container[1]))
-        petalLength.append(float(container[2]))
-        petalWidth.append(float(container[3]))
+        sepalLenghtTemp.append(float(container[0]))
+        sepalWidthTemp.append(float(container[1]))
+        petalLengthTemp.append(float(container[2]))
+        petalWidthTemp.append(float(container[3]))
         if container[4] == "0\n":
-            species.append("setosa")
+            speciesTemp.append("setosa")
         if container[4] == "1\n":
-            species.append("versicolor")
+            speciesTemp.append("versicolor")
         if container[4] == "2\n":
-            species.append("virginica")
+            speciesTemp.append("virginica")
+
+
+def bubbleSort(arr):
+    for i in range(size - 1):
+        for j in range(size - i - 1):
+            if arr[j] > arr[j + 1]:
+                temp = arr[j]
+                arr[j] = arr[j + 1]
+                arr[0][j + 1] = temp
+
+
+bubbleSort(sepalLenghtTemp)
+bubbleSort()
+
+sepalLenght = np.array([sepalLenghtTemp])
+sepalWidth = np.array([sepalWidthTemp])
+petalLength = np.array([petalLengthTemp])
+petalWidth = np.array([petalWidthTemp])
+species = np.array([speciesTemp])
 
 
 def liczebnosc(nazwa):
@@ -34,62 +54,67 @@ def udzial_procentowy(nazwa):
     return round(liczebnosc(nazwa) / size, 2)
 
 
-def maksimum(*cecha):
+def maksimum(cecha):
     max = -1
     for i in range(size):
         if cecha[i] > max:
-            max = cecha[i]
+            max = cecha[0][i]
     return max
 
 
-def minimum(*cecha):
+def minimum(cecha):
     min = 1000
     for i in range(size):
-        if cecha[i] < min:
-            min = cecha[i]
+        if cecha[0][i] < min:
+            min = cecha[0][i]
     return min
 
 
-def srednia_arytmetyczna(*cecha):
-    suma = 0
+def srednia_arytmetyczna(cecha):
+    suma = 0.0
     for i in range(size):
-        suma += cecha[i]
+        suma = suma + cecha[0][i]
     return suma / size
 
 
-def mediana(*cecha):
-    # sortowanie!
+def mediana(cecha):
+    bubbleSort(cecha[0].astype(list))
     if size % 2 == 0:
-        return round((cecha[int(size / 2)] + cecha[(int(size / 2)) + 1]) / 2, 2)
-    return cecha[int(size / 2) + 1]
+        return round(
+            (cecha[0][int(size / 2)] + cecha[0][(int(size / 2)) + 1]) / 2, 2)
+    return cecha[0][int(size / 2) + 1]
 
 
-def kwartyl(*cecha):
-    # sortowanie!
-    array1 = []
-    array2 = []
+def kwartyl(cecha):
+    bubbleSort(cecha[0][0])
+    array1 = np.empty(int(size / 2))
+    array2 = np.empty(int(size / 2))
     if size % 2 == 0:
-        for i in range(int(size/2)):
-            array1[i] = cecha[i]
-        for i in range(int(size/2) + 1, size):
-            array2[i] = cecha[i]
+        for i in range(int(size / 2)):
+            array1.fill(cecha[0][i])
+        for i in range(int(size / 2) + 1, size):
+            array2.fill(cecha[0][i])
         dolny = mediana(array1)
         gorny = mediana(array2)
         return (dolny, gorny)
-    for i in reversed(range(int(size/2))):
-        array1[i] = cecha[i]
-    for i in range(math.floor(size/2)+1, size):
-        array2[i] = cecha[i]
+    for i in reversed(range(int(size / 2))):
+        array1[i] = cecha[0][i]
+    for i in range(math.floor(size / 2) + 1, size):
+        array2[i] = cecha[0][i]
     dolny = mediana(array1)
     gorny = mediana(array2)
     return (dolny, gorny)
 
-def odchylenie_standardowe(*cecha):
+
+def odchylenie_standardowe(cecha):
     srednia = srednia_arytmetyczna(cecha)
     licznik = 0
     for i in range(size):
-        licznik += ((cecha[i] - srednia) * (cecha[i] - srednia))
-    return math.sqrt(licznik/(size - 1))
+        licznik += ((cecha[0][i] - srednia) * (cecha[0][i] - srednia))
+    return math.sqrt(licznik / (size - 1))
 
 
-print(srednia_arytmetyczna(sepalLenght))
+# print(srednia_arytmetyczna(sepalLenght))
+print(kwartyl(sepalWidth)[0])
+# print(odchylenie_standardowe(petalLength))
+# print(mediana(petalWidthTemp))
