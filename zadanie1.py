@@ -55,7 +55,7 @@ def maksimum(cecha):
     for i in range(size):
         if cecha[0][i] > max:
             max = cecha[0][i]
-    return max
+    return round(max, 2)
 
 
 def minimum(cecha):
@@ -63,30 +63,30 @@ def minimum(cecha):
     for i in range(size):
         if cecha[0][i] < min:
             min = cecha[0][i]
-    return min
+    return round(min, 2)
 
 
 def srednia_arytmetyczna(cecha):
     suma = 0.0
     for i in range(size):
         suma = suma + cecha[0][i]
-    return suma / size
+    return round(suma / size, 2)
 
 
 def mediana(cecha): # uzywac tempa
     index = math.floor(size / 2) - 1
     if size % 2 == 0:
         return round((cecha[index] + cecha[index + 1]) / 2, 2)
-    return cecha[int(size / 2) + 1]
+    return round(cecha[int(size / 2) + 1], 2)
 
 
 def kwartyl(cecha): # uzywac tempa
     firstQuadIndex = math.floor(size / 4) - 1
     thirdQuadIndex = math.ceil(size * 3 / 4) - 1
     if (math.floor(size / 2) % 2 == 0):
-        return ((cecha[firstQuadIndex] + cecha[firstQuadIndex + 1]) / 2,
-                (cecha[thirdQuadIndex] + cecha[thirdQuadIndex + 1]) / 2)
-    return (cecha[firstQuadIndex + 1], cecha[thirdQuadIndex])
+        return (round((cecha[firstQuadIndex] + cecha[firstQuadIndex + 1]) / 2, 2),
+                (round(cecha[thirdQuadIndex] + cecha[thirdQuadIndex + 1]) / 2), 2)
+    return (round(cecha[firstQuadIndex + 1], 2), round(cecha[thirdQuadIndex], 2))
 
 
 def odchylenie_standardowe(cecha):
@@ -94,7 +94,7 @@ def odchylenie_standardowe(cecha):
     licznik = 0
     for i in range(size):
         licznik += ((cecha[0][i] - srednia) * (cecha[0][i] - srednia))
-    return math.sqrt(licznik / (size - 1))
+    return round(math.sqrt(licznik / (size - 1)), 2)
 
 
 print("srednia", srednia_arytmetyczna(sepalLength))
