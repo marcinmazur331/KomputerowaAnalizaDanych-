@@ -8,8 +8,6 @@ petalLengthTemp = []
 petalWidthTemp = []
 species = []
 
-
-
 with open('data.csv', 'r') as file:
     size = 0
     for line in file:
@@ -20,8 +18,6 @@ with open('data.csv', 'r') as file:
         petalLengthTemp.append(float(container[2]))
         petalWidthTemp.append(float(container[3]))
         species.append(int(container[4]))
-
-
 
 
 def bubbleSort(arr):
@@ -89,9 +85,12 @@ def kwartyl(cecha):  # uzywac tempa
     firstQuadIndex = math.floor(size / 4) - 1
     thirdQuadIndex = math.ceil(size * 3 / 4) - 1
     if (math.floor(size / 2) % 2 == 0):
-        return (round((cecha[firstQuadIndex] + cecha[firstQuadIndex + 1]) / 2, 2),
-                (round(cecha[thirdQuadIndex] + cecha[thirdQuadIndex + 1]) / 2), 2)
-    return (round(cecha[firstQuadIndex + 1], 2), round(cecha[thirdQuadIndex], 2))
+        return (round(
+            (cecha[firstQuadIndex] + cecha[firstQuadIndex + 1]) / 2,
+            2), (round(cecha[thirdQuadIndex] + cecha[thirdQuadIndex + 1]) / 2),
+                2)
+    return (round(cecha[firstQuadIndex + 1], 2), round(cecha[thirdQuadIndex],
+                                                       2))
 
 
 def odchylenie_standardowe(cecha):
@@ -101,10 +100,17 @@ def odchylenie_standardowe(cecha):
         licznik += ((cecha[0][i] - srednia) * (cecha[0][i] - srednia))
     return round(math.sqrt(licznik / (size - 1)), 2)
 
+
 def histogram(cecha, tytul, string):
     fig = plt.subplots(figsize=(10, 7))
-    plt.hist(sepalLength[0], bins=[4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0], edgecolor='black', linewidth=3)
-    plt.title(tytul, fontsize=25, )
+    plt.hist(sepalLength[0],
+             bins=[4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0],
+             edgecolor='black',
+             linewidth=3)
+    plt.title(
+        tytul,
+        fontsize=25,
+    )
     plt.ylabel('Liczebność', fontsize=20)
     plt.xlabel(string, fontsize=20)
     plt.yticks(fontsize=20)
@@ -124,17 +130,10 @@ def histogram(cecha, tytul, string):
 
 # histogram(sepalLength, 'Długość działki kielicha', 'Długość (cm)')
 
-
-
-
-
 fig = plt.figure(figsize=(10, 7))
 plt.xlabel('Gatunek', fontsize=20)
 plt.ylabel('Długość (cm)', fontsize=20)
 
 # plt.boxplot()
 
-
 plt.show()
-
-
